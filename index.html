@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sierpenski</title>
+  <style>
+    body {
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    #canvas {
+      width: 100vw;
+      height: 100vh;
+    }
+
+    #controls {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1;
+      border: 1px solid gray;
+      padding: 10px;
+      box-shadow: 3px 3px 3px rgba(0,0,0, .3);
+      background-color: white;
+      
+    }
+
+    .input-range {
+      display: flex;
+      flex-direction: column;
+    }
+
+    datalist {
+      display: flex;
+      justify-content: space-between;
+      font-size: smaller;
+    }
+
+  </style>  
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <div id="controls">
+    Number of iterations<br>
+    <div class="input-range">
+      <input type="range" id="iterations" name="iterations" value="2" min="0" max="10" step="1" list="tickmarks-iterations">
+      <datalist id="tickmarks-iterations">
+      <option value="0" label="0"></option>
+      <option value="5" label="5"></option>
+      <option value="10" label="10"></option>
+      </datalist>
+    </div>
+  </div>
+  
+  
+  <script type="module">
+    import Sierpenski from './sierpenski.js';
+
+    let c = document.querySelector('#canvas');
+    c.width = window.innerWidth * 2;
+    c.height = window.innerHeight * 2;
+
+    let s = new Sierpenski(c);
+    let render = () => {
+      s.render(parseInt(document.querySelector('#iterations').value));
+    };
+
+    render();
+    document.querySelector('#iterations').addEventListener('input', render);
+  </script>
+</body>
+</html>
